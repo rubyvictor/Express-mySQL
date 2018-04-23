@@ -35,7 +35,16 @@ app.get("/user/:id", (req, res) => {
       return;
     }
     console.log("fetched users successfully");
-    res.json(users);
+
+    const fetchedUsers = users.map(user => {
+      return {
+        userID: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name
+      };
+    });
+
+    res.json(fetchedUsers);
   });
 });
 
