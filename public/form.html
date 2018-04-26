@@ -11,13 +11,21 @@
 </head>
 
 <body>
-    <div>Create a new user by filling out this form below:
+    <div>Create/Update/Remove a user by filling out this form below:
         <hr>
         <form action="/user_create" method="POST">
-            FirstName:
+            firstName:
             <input type="text" placeholder="First name" name="create_first_name"> lastName:
             <input type="text" placeholder="Last name" name="create_last_name">
             <button>Submit</button>
+        </form>
+        <form action="/user_update" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+            User id:
+            <input type="text" placeholder="Id" name="user_id"> firstName:
+            <input type="text" placeholder="First name" name="update_first_name"> lastName:
+            <input type="text" placeholder="Last name" name="update_last_name">
+            <button>Update</button>
         </form>
     </div>
 </body>
