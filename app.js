@@ -2,13 +2,13 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const mysql = require("mysql");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
 app.use(morgan("short"));
 app.use(express.static("./public"));
-
+app.use(bodyParser.urlencoded({ extended: false }));
 //setup db connection
-const connection = mysql.createConnection({
+const getConnection = mysql.createConnection({
   host: "localhost",
   user: "root",
   database: "Express_mysql"
@@ -21,14 +21,31 @@ app.get("/", (req, res) => {
 
 // Create new user
 app.post("/user_create", (req, res) => {
-  console.log("Trying to create a new user")
-  res.end()
+  console.log("Trying to create a new user");
+
+  const firstName = req.body.create_first_name;
+  const lastName = req.body.create_last_name;
+
+  const queryString = "INSERT INTO users (first_name,last_name) VALUES (?,?)";
+  getConnection.query(
+    queryString,
+    [firstName, lastName],
+    (error, results, fields) => {
+      if (error) {
+        console.log("Failed to insert new user:" + error);
+        res.sendStatus(500);
+        return;
+      }
+      console.log("successfully inserted new user:" + results.insertId);
+      res.json();
+    }
+  );
 });
 
 //test some dummy rest api data
 app.get("/users", (req, res) => {
   const queryString = "SELECT * FROM users";
-  connection.query(queryString, (error, users, fields) => {
+  getConnection.query(queryString, (error, users, fields) => {
     console.log("fetched users successfully");
     res.json({ users });
   });
@@ -36,7 +53,7 @@ app.get("/users", (req, res) => {
 
 app.get("/user/:id", (req, res) => {
   const queryString = `SELECT * FROM users where id = ${req.params.id}`;
-  connection.query(queryString, (error, users, fields) => {
+  getConnection.query(queryString, (error, users, fields) => {
     if (error) {
       console.log("Failed to query for users:" + error);
       res.sendStatus(500);
