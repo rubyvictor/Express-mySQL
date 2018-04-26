@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const mysql = require("mysql");
+const bodyParser = require('body-parser');
 
 app.use(morgan("short"));
 app.use(express.static("./public"));
