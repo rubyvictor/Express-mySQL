@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const mysql = require("mysql");
 
 app.use(morgan("short"));
+app.use(express.static("./public"));
 
 //setup db connection
 const connection = mysql.createConnection({
@@ -15,6 +16,12 @@ const connection = mysql.createConnection({
 //specify root route
 app.get("/", (req, res) => {
   res.send("Hello from express application");
+});
+
+// Create new user
+app.post("/user_create", (req, res) => {
+  console.log("Trying to create a new user")
+  res.end()
 });
 
 //test some dummy rest api data
