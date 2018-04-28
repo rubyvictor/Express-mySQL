@@ -25,7 +25,6 @@ app.use(
 
 app.use(router);
 
-
 app.listen(3003, () => {
   console.log("Server is up and listening to port 3003.");
 });

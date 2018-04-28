@@ -3,7 +3,8 @@ const mysql = require("mysql");
 
 const router = express.Router();
 
-const getConnection = mysql.createConnection({
+const pool = mysql.createPool({
+  connectionLimit: 10,
   host: "localhost",
   user: "root",
   database: "Express_mysql"
@@ -16,7 +17,7 @@ router.get("/messages", (req, res) => {
 
 router.get("/users", (req, res) => {
   const queryString = "SELECT * FROM users";
-  getConnection.query(queryString, (error, users, fields) => {
+  pool.query(queryString, (error, users, fields) => {
     console.log("fetched users successfully");
     res.json({ users });
   });
@@ -33,7 +34,7 @@ router.put("/user_update", (req, res) => {
   const firstName = req.body.update_first_name;
   const lastName = req.body.update_last_name;
   const queryString = "UPDATE users SET ? WHERE id = ?";
-  getConnection.query(
+  pool.query(
     queryString,
     [{ first_name: firstName, last_name: lastName }, id],
     (error, results, fields) => {
@@ -55,24 +56,20 @@ router.post("/user_create", (req, res) => {
   const lastName = req.body.create_last_name;
 
   const queryString = "INSERT INTO users (first_name,last_name) VALUES (?,?)";
-  getConnection.query(
-    queryString,
-    [firstName, lastName],
-    (error, results, fields) => {
-      if (error) {
-        console.log("Failed to insert new user:" + error);
-        res.sendStatus(500);
-        return;
-      }
-      console.log("successfully inserted new user:" + results.insertId);
-      res.json();
+  pool.query(queryString, [firstName, lastName], (error, results, fields) => {
+    if (error) {
+      console.log("Failed to insert new user:" + error);
+      res.sendStatus(500);
+      return;
     }
-  );
+    console.log("successfully inserted new user:" + results.insertId);
+    res.json();
+  });
 });
 
 router.get("/user/:id", (req, res) => {
   const queryString = `SELECT * FROM users where id = ${req.params.id}`;
-  getConnection.query(queryString, (error, users, fields) => {
+  pool.query(queryString, (error, users, fields) => {
     if (error) {
       console.log("Failed to query for users:" + error);
       res.sendStatus(500);
