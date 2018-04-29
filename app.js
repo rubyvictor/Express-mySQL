@@ -25,9 +25,7 @@ app.use(
 
 app.use(router);
 
-app.get("/", (req, res) => {
-  res.send("Hello from express application and ROOT");
-});
+
 
 const PORT = process.env.PORT || 3003
 app.listen(PORT, () => {

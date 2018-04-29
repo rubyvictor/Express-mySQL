@@ -10,6 +10,10 @@ const pool = mysql.createPool({
   database: "Express_mysql"
 });
 
+router.get("/", (req, res) => {
+  res.send("Hello from express application and ROOT");
+});
+
 router.get("/messages", (req, res) => {
   console.log("Showing some messages");
   res.end();
