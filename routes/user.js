@@ -23,10 +23,6 @@ router.get("/users", (req, res) => {
   });
 });
 
-router.get("/", (req, res) => {
-  res.send("Hello from express application");
-});
-
 router.put("/user_update", (req, res) => {
   console.log("Trying to update a current user");
 
