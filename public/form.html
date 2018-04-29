@@ -6,8 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Hello from my app</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
 </head>
 
 <body>
@@ -20,8 +18,7 @@
             <button>Submit</button>
         </form>
         <form action="/user_update" method="POST">
-            <input type="hidden" name="_method" value="PUT">
-            User id:
+            <input type="hidden" name="_method" value="PUT"> User id:
             <input type="text" placeholder="Id" name="user_id"> firstName:
             <input type="text" placeholder="First name" name="update_first_name"> lastName:
             <input type="text" placeholder="Last name" name="update_last_name">
