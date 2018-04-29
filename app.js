@@ -25,10 +25,6 @@ app.use(
 
 app.use(router);
 
-app.get("/", (req, res) => {
-  res.send("finally showing this page...");
-});
-
 const PORT = process.env.PORT || 3003;
 app.listen(PORT, () => {
   console.log("Server is up and listening on:" + PORT);
