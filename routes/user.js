@@ -11,6 +11,7 @@ const pool = mysql.createPool({
 });
 
 router.get("/", (req, res) => {
+  console.log("HELLO FROM ROOT ROUTE!!")
   res.send("Hello from express application and ROOT");
 });
 
