@@ -12,6 +12,9 @@
     "npm": "5.6.0",
     "yarn": "1.6.0"
   },
+  "scripts": {
+    "start": "node app"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "method-override": "^2.3.10",
