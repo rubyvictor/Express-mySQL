@@ -3,11 +3,18 @@ const mysql = require("mysql");
 
 const router = express.Router();
 
+const HOST_NAME = process.env.MYAPP_CLEARDB_HOST_NAME;
+const USER_NAME = process.env.MYAPP_CLEARDB_USER_NAME;
+const PASSWORD = process.env.MYAPP_CLEARDB_PASSWORD;
+const DATABASE = process.env.MYAPP_DATABASE_NAME;
+
+
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: "localhost",
-  user: "root",
-  database: "Express_mysql"
+  host: HOST_NAME,
+  user: USER_NAME,
+  password: PASSWORD,
+  database: DATABASE
 });
 
 router.get("/", (req, res) => {
